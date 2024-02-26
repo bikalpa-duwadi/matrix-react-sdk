@@ -194,6 +194,7 @@ interface IState {
     ghostReadMarkers: string[];
     showTypingNotifications: boolean;
     hideSender: boolean;
+    isMounted: boolean;
 }
 
 interface IReadReceiptForUser {
@@ -249,7 +250,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     private readReceiptsByUserId: Map<string, IReadReceiptForUser> = new Map();
 
     private readonly _showHiddenEvents: boolean;
-    private isMounted = false;
 
     private readMarkerNode = createRef<HTMLLIElement>();
     private whoIsTyping = createRef<WhoIsTypingTile>();
@@ -267,6 +267,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         this.state = {
             // previous positions the read marker has been in, so we can
             // display 'ghost' read markers that are animating away
+            isMounted: false,
             ghostReadMarkers: [],
             showTypingNotifications: SettingsStore.getValue("showTypingNotifications"),
             hideSender: this.shouldHideSender(),
@@ -287,11 +288,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     public componentDidMount(): void {
         this.calculateRoomMembersCount();
         this.props.room?.currentState.on(RoomStateEvent.Update, this.calculateRoomMembersCount);
-        this.isMounted = true;
+        this.setState({isMounted: true});
     }
 
     public componentWillUnmount(): void {
-        this.isMounted = false;
+        this.setState({isMounted: false});
         this.props.room?.currentState.off(RoomStateEvent.Update, this.calculateRoomMembersCount);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);
         this.readReceiptMap = {};
@@ -450,7 +451,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     private isUnmounting = (): boolean => {
-        return !this.isMounted;
+        return !this.state.isMounted;
     };
 
     public get showHiddenEvents(): boolean {
