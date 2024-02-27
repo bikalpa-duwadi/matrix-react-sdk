@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import classNames from "classnames";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
@@ -352,14 +352,22 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         // await next tick because sometimes ReactDOM can race with itself and cause the modal to wrongly stick around
         await sleep(0);
 
+        const staticContainer = ModalManager.getOrCreateStaticContainer();
+        const staticRoot = createRoot(staticContainer);
+
+        const container = ModalManager.getOrCreateContainer();
+        const root = createRoot(container);
+
         if (this.modals.length === 0 && !this.priorityModal && !this.staticModal) {
             // If there is no modal to render, make all of Element available
             // to screen reader users again
             dis.dispatch({
                 action: "aria_unhide_main_app",
             });
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
+
+
+            staticRoot.unmount();
+            root.unmount();
             return;
         }
 
@@ -386,10 +394,10 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
                 </TooltipProvider>
             );
 
-            ReactDOM.render(staticDialog, ModalManager.getOrCreateStaticContainer());
+            staticRoot.render(staticDialog);
         } else {
             // This is safe to call repeatedly if we happen to do that
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
+            staticRoot.unmount()
         }
 
         const modal = this.getCurrentModal();
@@ -411,10 +419,10 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
                 </TooltipProvider>
             );
 
-            setImmediate(() => ReactDOM.render(dialog, ModalManager.getOrCreateContainer()));
+            setImmediate(() => root.render(dialog));
         } else {
             // This is safe to call repeatedly if we happen to do that
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
+            root.unmount();
         }
     }
 }

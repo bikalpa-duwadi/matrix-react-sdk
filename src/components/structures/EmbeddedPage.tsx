@@ -121,7 +121,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
     public render(): React.ReactNode {
         // HACK: Workaround for the context's MatrixClient not updating.
         const client = this.context || MatrixClientPeg.get();
-        const isGuest = client ? client.isGuest() : true;
+        const isGuest = client ? (client as any).isGuest() : true;
         const className = this.props.className;
         const classes = classnames(className, {
             [`${className}_guest`]: isGuest,

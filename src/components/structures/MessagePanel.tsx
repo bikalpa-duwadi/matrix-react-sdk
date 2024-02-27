@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, ReactNode, TransitionEvent } from "react";
-import ReactDOM from "react-dom";
+import { findDOMNode } from 'react-dom';
 import classNames from "classnames";
 import { Room, MatrixClient, RoomStateEvent, EventStatus, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -391,7 +391,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             return null;
         }
 
-        const wrapperRect = (ReactDOM.findDOMNode(messageWrapper) as HTMLElement).getBoundingClientRect();
+        const wrapperRect = (findDOMNode(messageWrapper) as HTMLElement).getBoundingClientRect();
         const readMarkerRect = readMarker.getBoundingClientRect();
 
         // the read-marker pretends to have zero height when it is actually

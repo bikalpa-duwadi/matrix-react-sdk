@@ -1335,7 +1335,7 @@ const BasicUserInfo: React.FC<{
     }, [cli, member.userId]);
     // Recheck also if we receive new accountData m.ignored_user_list
     const accountDataHandler = useCallback(
-        (ev) => {
+        (ev: any) => {
             if (ev.getType() === "m.ignored_user_list") {
                 setIsIgnored(cli.isUserIgnored(member.userId));
             }

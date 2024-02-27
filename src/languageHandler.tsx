@@ -56,7 +56,7 @@ export interface ErrorOptions {
     // Because we're mixing the subsitution variables and `cause` into the same object
     // below, we want them to always explicitly say whether there is an underlying error
     // or not to avoid typos of "cause" slipping through unnoticed.
-    cause: unknown | undefined;
+    cause: unknown | undefined | any;
 }
 
 /**
@@ -78,7 +78,7 @@ export interface ErrorOptions {
 export class UserFriendlyError extends Error {
     public readonly translatedMessage: string;
 
-    public constructor(message: TranslationKey, substitutionVariablesAndCause?: IVariables & ErrorOptions) {
+    public constructor(message: TranslationKey, substitutionVariablesAndCause?: ErrorOptions & IVariables) {
         const errorOptions = {
             cause: substitutionVariablesAndCause?.cause,
         };
@@ -198,7 +198,7 @@ type SubstitutionValue = number | string | React.ReactNode | ((sub: string) => R
 
 export interface IVariables {
     count?: number;
-    [key: string]: SubstitutionValue;
+    [key: string]: SubstitutionValue | any;
 }
 
 export type Tags = Record<string, SubstitutionValue>;
@@ -445,6 +445,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
     }
 
     if (shouldWrapInSpan) {
+        // @ts-ignore
         return React.createElement("span", null, ...output);
     } else {
         return output.join("");

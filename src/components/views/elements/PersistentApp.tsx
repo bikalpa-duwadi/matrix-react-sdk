@@ -26,6 +26,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 interface IProps {
     persistentWidgetId: string;
     persistentRoomId: string;
+    children: React.ReactNode;
     pointerEvents?: CSSProperties["pointerEvents"];
     movePersistedElement: MutableRefObject<(() => void) | undefined>;
 }

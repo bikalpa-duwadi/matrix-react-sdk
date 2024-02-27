@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { CSSProperties, MouseEventHandler, ReactNode, RefCallback } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import classNames from "classnames";
 
 import UIStore from "../../../stores/UIStore";
@@ -420,8 +420,12 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
 
     private renderTooltip(): ReactNode {
         const { contentRect, visible } = this.state;
+
+        const container = getOrCreateContainer();
+        const root = createRoot(container);
+
         if (!visible) {
-            ReactDOM.unmountComponentAtNode(getOrCreateContainer());
+            root.unmount();
             return null;
         }
 
@@ -486,7 +490,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
             </div>
         );
 
-        ReactDOM.render(tooltip, getOrCreateContainer());
+        root.render(tooltip);
     }
 
     public render(): ReactNode {

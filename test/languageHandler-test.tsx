@@ -293,7 +293,7 @@ describe("languageHandler JSX", function () {
         });
 
         it.each(testCasesEn)("%s", (_d, translationString, variables, tags, result) => {
-            expect(_t(translationString, variables, tags!)).toEqual(result);
+            expect(_t(translationString, variables, (tags as any)!)).toEqual(result);
         });
 
         it("replacements in the wrong order", function () {
@@ -356,7 +356,7 @@ describe("languageHandler JSX", function () {
                     );
                 });
                 it.each(pluralCases)("%s", (_d, translationString, variables, tags, result) => {
-                    expect(_t(translationString, variables, tags!)).toEqual(result);
+                    expect(_t(translationString, variables, (tags as any)!)).toEqual(result);
                 });
             });
 
@@ -369,7 +369,7 @@ describe("languageHandler JSX", function () {
                 it.each(pluralCases)(
                     "%s and translates with fallback locale, attributes fallback locale",
                     (_d, translationString, variables, tags, result) => {
-                        expect(_tDom(translationString, variables, tags!)).toEqual(<span lang="en">{result}</span>);
+                        expect(_tDom(translationString, variables, (tags as any)!)).toEqual(<span lang="en">{result}</span>);
                     },
                 );
             });
@@ -380,7 +380,7 @@ describe("languageHandler JSX", function () {
                 it.each(testCasesEn)(
                     "%s and translates with fallback locale",
                     (_d, translationString, variables, tags, result) => {
-                        expect(_t(translationString, variables, tags!)).toEqual(result);
+                        expect(_t(translationString, variables, (tags as any)!)).toEqual(result);
                     },
                 );
             });
@@ -389,7 +389,7 @@ describe("languageHandler JSX", function () {
                 it.each(testCasesEn)(
                     "%s and translates with fallback locale, attributes fallback locale",
                     (_d, translationString, variables, tags, result) => {
-                        expect(_tDom(translationString, variables, tags!)).toEqual(<span lang="en">{result}</span>);
+                        expect(_tDom(translationString, variables, (tags as any)!)).toEqual(<span lang="en">{result}</span>);
                     },
                 );
             });

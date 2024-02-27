@@ -181,7 +181,7 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
     }));
 
     const addNewServer = useCallback(
-        ({ closeMenu }) => (
+        ({ closeMenu }: any) => (
             <>
                 <span className="mx_GenericDropdownMenu_divider" />
                 <MenuItemRadio

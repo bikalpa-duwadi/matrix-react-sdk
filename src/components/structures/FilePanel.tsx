@@ -266,8 +266,9 @@ class FilePanel extends React.Component<IProps, IState> {
         if (this.state.timelineSet) {
             return (
                 <RoomContext.Provider
+                // @ts-ignore
                     value={{
-                        ...this.context,
+                        ...(this.context as object),
                         timelineRenderingType: TimelineRenderingType.File,
                         narrow: this.state.narrow,
                     }}
@@ -298,8 +299,9 @@ class FilePanel extends React.Component<IProps, IState> {
         } else {
             return (
                 <RoomContext.Provider
+                // @ts-ignore
                     value={{
-                        ...this.context,
+                        ...(this.context as object),
                         timelineRenderingType: TimelineRenderingType.File,
                     }}
                 >

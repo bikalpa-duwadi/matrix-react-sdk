@@ -52,7 +52,7 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
     const predecessor = useRoomState(
         roomContext.room,
         useCallback(
-            (state) => state.findPredecessor(msc3946ProcessDynamicPredecessor),
+            (state: any) => state.findPredecessor(msc3946ProcessDynamicPredecessor),
             [msc3946ProcessDynamicPredecessor],
         ),
     );

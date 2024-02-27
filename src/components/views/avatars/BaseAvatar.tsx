@@ -80,7 +80,7 @@ const useImageUrl = ({ url, urls }: { url?: string | null; urls?: string[] }): [
     }, [url, JSON.stringify(urls)]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const cli = useContext(MatrixClientContext);
-    const onClientSync = useCallback((syncState, prevState) => {
+    const onClientSync = useCallback((syncState: any, prevState: any) => {
         // Consider the client reconnected if there is no error with syncing.
         // This means the state could be RECONNECTING, SYNCING, PREPARED or CATCHUP.
         const reconnected = syncState !== "ERROR" && prevState !== syncState;

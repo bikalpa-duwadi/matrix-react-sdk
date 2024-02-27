@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import React, { createRef, SyntheticEvent, MouseEvent } from "react";
-import ReactDOM from "react-dom";
+import { findDOMNode } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import highlight from "highlight.js";
 import { MsgType } from "matrix-js-sdk/src/matrix";
 import { TooltipProvider } from "@vector-im/compound-web";
@@ -105,7 +106,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
         if (this.props.mxEvent.getContent().format === "org.matrix.custom.html") {
             // Handle expansion and add buttons
-            const pres = (ReactDOM.findDOMNode(this) as Element).getElementsByTagName("pre");
+            const pres = (findDOMNode(this) as Element).getElementsByTagName("pre");
             if (pres.length > 0) {
                 for (let i = 0; i < pres.length; i++) {
                     // If there already is a div wrapping the codeblock we want to skip this.
@@ -127,7 +128,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 }
             }
             // Highlight code
-            const codes = (ReactDOM.findDOMNode(this) as Element).getElementsByTagName("code");
+            const codes = (findDOMNode(this) as Element).getElementsByTagName("code");
             if (codes.length > 0) {
                 // Do this asynchronously: parsing code takes time and we don't
                 // need to block the DOM update on it.
@@ -354,7 +355,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                     </TooltipProvider>
                 );
 
-                ReactDOM.render(spoiler, spoilerContainer);
+                const root = createRoot(spoilerContainer);
+                root.render(spoiler);
                 node.parentNode?.replaceChild(spoilerContainer, node);
 
                 node = spoilerContainer;

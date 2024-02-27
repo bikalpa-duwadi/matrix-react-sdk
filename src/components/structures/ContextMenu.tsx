@@ -17,7 +17,8 @@ limitations under the License.
 */
 
 import React, { CSSProperties, RefObject, SyntheticEvent, useRef, useState } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import classNames from "classnames";
 import FocusLock from "react-focus-lock";
 import { TooltipProvider } from "@vector-im/compound-web";
@@ -454,8 +455,9 @@ export default class ContextMenu extends React.PureComponent<React.PropsWithChil
             // Render as a child of the current parent
             return this.renderMenu();
         } else {
+
             // Render as a child of a container at the root of the DOM
-            return ReactDOM.createPortal(this.renderMenu(), getOrCreateContainer());
+            return createPortal(this.renderMenu(), getOrCreateContainer());
         }
     }
 }
@@ -624,8 +626,11 @@ export function createMenu(
     ElementClass: typeof React.Component,
     props: Record<string, any>,
 ): { close: (...args: any[]) => void } {
+    const container = getOrCreateContainer();
+    const root = createRoot(container);
+
     const onFinished = function (...args: any[]): void {
-        ReactDOM.unmountComponentAtNode(getOrCreateContainer());
+        root.unmount();
         props?.onFinished?.apply(null, args);
     };
 
@@ -643,7 +648,7 @@ export function createMenu(
         </TooltipProvider>
     );
 
-    ReactDOM.render(menu, getOrCreateContainer());
+    root.render(menu);
 
     return { close: onFinished };
 }

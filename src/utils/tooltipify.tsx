@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { TooltipProvider } from "@vector-im/compound-web";
 
 import PlatformPeg from "../PlatformPeg";
@@ -68,7 +68,8 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
                 </TooltipProvider>
             );
 
-            ReactDOM.render(tooltip, node);
+            const root = createRoot(node);
+            root.render(tooltip);
             containers.push(node);
         } else if (node.childNodes?.length) {
             tooltipifyLinks(node.childNodes as NodeListOf<Element>, ignoredNodes, containers);
@@ -88,6 +89,7 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
  */
 export function unmountTooltips(containers: Element[]): void {
     for (const container of containers) {
-        ReactDOM.unmountComponentAtNode(container);
+        const root = createRoot(container);
+        root.unmount();
     }
 }

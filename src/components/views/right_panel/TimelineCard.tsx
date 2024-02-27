@@ -77,6 +77,8 @@ interface IState {
 export default class TimelineCard extends React.Component<IProps, IState> {
     public static contextType = RoomContext;
 
+    public declare context: React.ContextType<typeof RoomContext>
+
     private dispatcherRef?: string;
     private layoutWatcherRef?: string;
     private timelinePanel = React.createRef<TimelinePanel>();

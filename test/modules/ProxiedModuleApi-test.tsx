@@ -126,6 +126,7 @@ describe("ProxiedApiModule", () => {
 
             const resultPromise = api.openDialog<{ result: boolean }, DialogProps, MyDialogContent>(
                 "My Dialog Title",
+                // @ts-ignore
                 (props, ref) => <MyDialogContent ref={ref} {...props} />,
             );
 
@@ -160,6 +161,7 @@ describe("ProxiedApiModule", () => {
                     cancelLabel: "Cancel it",
                     canSubmit: false,
                 },
+                // @ts-ignore
                 (props, ref) => <MyDialogContent ref={ref} {...props} />,
             );
 
@@ -205,6 +207,7 @@ describe("ProxiedApiModule", () => {
 
             const resultPromise = api.openDialog<{ result: boolean }, DialogProps, MyDialogContent>(
                 "My Dialog Title",
+                // @ts-ignore
                 (props, ref) => <MyDialogContent ref={ref} {...props} />,
             );
 
@@ -243,6 +246,7 @@ describe("ProxiedApiModule", () => {
 
             const resultPromise = api.openDialog<{ result: boolean }, DialogProps, MyDialogContent>(
                 "My Dialog Title",
+                // @ts-ignore
                 (props, ref) => <MyDialogContent ref={ref} {...props} />,
             );
 

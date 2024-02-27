@@ -24,6 +24,7 @@ interface OptionProps {
     inputRef?: RefObject<HTMLLIElement>;
     endAdornment?: ReactNode;
     id?: string;
+    children: React.ReactNode;
     className?: string;
     onClick: ((ev: ButtonEvent) => void) | null;
 }

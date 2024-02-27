@@ -69,8 +69,7 @@ const QuickSettingsButton: React.FC<{
                 >
                     {_t("quick_settings|all_settings")}
                 </AccessibleButton>
-
-                {currentRoomId && developerModeEnabled && (
+                {(currentRoomId && developerModeEnabled) ? (
                     <AccessibleButton
                         onClick={() => {
                             closeMenu();
@@ -86,7 +85,7 @@ const QuickSettingsButton: React.FC<{
                     >
                         {_t("devtools|title")}
                     </AccessibleButton>
-                )}
+                ): <></>}
 
                 <h4 className="mx_QuickSettingsButton_pinToSidebarHeading">
                     <PinUprightIcon className="mx_QuickSettingsButton_icon" />

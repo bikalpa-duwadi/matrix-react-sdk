@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 import { MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { TooltipProvider } from "@vector-im/compound-web";
@@ -89,7 +89,8 @@ export function pillifyLinks(
                     </TooltipProvider>
                 );
 
-                ReactDOM.render(pill, pillContainer);
+                const root = createRoot(pillContainer);
+                root.render(pill);
                 node.parentNode?.replaceChild(pillContainer, node);
                 pills.push(pillContainer);
                 // Pills within pills aren't going to go well, so move on
@@ -149,7 +150,8 @@ export function pillifyLinks(
                             </TooltipProvider>
                         );
 
-                        ReactDOM.render(pill, pillContainer);
+                        const root = createRoot(pillContainer);
+                        root.render(pill);
                         roomNotifTextNode.parentNode?.replaceChild(pillContainer, roomNotifTextNode);
                         pills.push(pillContainer);
                     }
@@ -181,6 +183,7 @@ export function pillifyLinks(
  */
 export function unmountPills(pills: Element[]): void {
     for (const pillContainer of pills) {
-        ReactDOM.unmountComponentAtNode(pillContainer);
+        const root = createRoot(pillContainer);
+        root.unmount();
     }
 }

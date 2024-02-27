@@ -63,7 +63,7 @@ export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom, onStartMovin
     const call = useCallForWidget(widgetId, room.roomId);
 
     const onBackClick = useCallback(
-        (ev) => {
+        (ev: any) => {
             ev.preventDefault();
             ev.stopPropagation();
 
@@ -88,7 +88,7 @@ export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom, onStartMovin
     );
 
     const onLeaveClick = useCallback(
-        (ev) => {
+        (ev: any) => {
             ev.preventDefault();
             ev.stopPropagation();
 

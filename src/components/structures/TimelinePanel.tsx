@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, ReactNode } from "react";
-import ReactDOM from "react-dom";
+import { findDOMNode } from 'react-dom';
 import {
     Room,
     RoomEvent,
@@ -434,7 +434,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         try {
             const messagePanel = this.messagePanel.current;
             if (messagePanel) {
-                const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
+                const messagePanelNode = findDOMNode(messagePanel) as Element;
                 if (messagePanelNode) {
                     const actuallyRenderedEvents = messagePanelNode.querySelectorAll("[data-event-id]");
                     renderedEventIds = [...actuallyRenderedEvents].map((renderedEvent) => {
@@ -1896,7 +1896,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const messagePanel = this.messagePanel.current;
         if (!messagePanel) return null;
 
-        const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
+        const messagePanelNode = findDOMNode(messagePanel) as Element;
         if (!messagePanelNode) return null; // sometimes this happens for fresh rooms/post-sync
         const wrapperRect = messagePanelNode.getBoundingClientRect();
         const margin = addMargin ? VISIBLE_DECRYPTION_FAILURE_MARGIN : 0;
@@ -1929,7 +1929,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const messagePanel = this.messagePanel.current;
         if (!messagePanel) return null;
 
-        const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
+        const messagePanelNode = findDOMNode(messagePanel) as Element;
         if (!messagePanelNode) return null; // sometimes this happens for fresh rooms/post-sync
         const wrapperRect = messagePanelNode.getBoundingClientRect();
         const myUserId = MatrixClientPeg.safeGet().credentials.userId;

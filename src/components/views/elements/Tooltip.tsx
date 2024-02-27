@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import React, { CSSProperties } from "react";
-import ReactDOM from "react-dom";
+import { findDOMNode, createPortal } from 'react-dom';
 import classNames from "classnames";
 
 import UIStore from "../../../stores/UIStore";
@@ -89,7 +89,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
             capture: true,
         });
 
-        this.parent = (ReactDOM.findDOMNode(this)?.parentNode as Element) ?? null;
+        this.parent = (findDOMNode(this)?.parentNode as Element) ?? null;
 
         this.updatePosition();
     }
@@ -194,6 +194,6 @@ export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
             </div>
         );
 
-        return <div className={this.props.className}>{ReactDOM.createPortal(tooltip, Tooltip.container)}</div>;
+        return <div className={this.props.className}>{createPortal(tooltip, Tooltip.container)}</div>;
     }
 }

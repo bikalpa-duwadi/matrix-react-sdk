@@ -79,8 +79,8 @@ interface IProps {
 }
 
 interface IState {
-    syncState: SyncState;
-    syncStateData: SyncStateData;
+    syncState: SyncState | null;
+    syncStateData: SyncStateData | null;
     unsentMessages: MatrixEvent[];
     isResending: boolean;
 }
@@ -88,6 +88,8 @@ interface IState {
 export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     private unmounted = false;
     public static contextType = MatrixClientContext;
+
+    public declare context: React.ContextType<typeof MatrixClientContext>
 
     public constructor(props: IProps, context: typeof MatrixClientContext) {
         super(props, context);
@@ -102,7 +104,9 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
 
     public componentDidMount(): void {
         const client = this.context;
+         // @ts-ignore
         client.on("sync", this.onSyncStateChange);
+         // @ts-ignore
         client.on("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
 
         this.checkSize();
@@ -117,7 +121,9 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         // we may have entirely lost our client as we're logging out before clicking login on the guest bar...
         const client = this.context;
         if (client) {
+             // @ts-ignore
             client.removeListener("sync", this.onSyncStateChange);
+             // @ts-ignore
             client.removeListener("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
         }
     }
